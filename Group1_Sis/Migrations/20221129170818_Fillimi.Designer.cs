@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Group1Sis.Migrations
 {
     [DbContext(typeof(Konteksti))]
-    [Migration("20221122170919_Fillimi i bazes")]
-    partial class Fillimiibazes
+    [Migration("20221129170818_Fillimi")]
+    partial class Fillimi
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,23 @@ namespace Group1Sis.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Group1_Sis.Models.Komuna", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Emri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Komuna");
+                });
 
             modelBuilder.Entity("Group1_Sis.Models.Student", b =>
                 {
@@ -36,13 +53,29 @@ namespace Group1Sis.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("KomunaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Mbiemri")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Studentet");
+                    b.HasIndex("KomunaId");
+
+                    b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("Group1_Sis.Models.Student", b =>
+                {
+                    b.HasOne("Group1_Sis.Models.Komuna", "Komuna")
+                        .WithMany()
+                        .HasForeignKey("KomunaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Komuna");
                 });
 #pragma warning restore 612, 618
         }

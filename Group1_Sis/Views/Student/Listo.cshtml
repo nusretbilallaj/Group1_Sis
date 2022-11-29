@@ -1,6 +1,36 @@
 ﻿@model List<Student>
 
-@foreach (Student stud in Model)
-{
-    <h2>@stud.Emri @stud.Mbiemri </h2>
-}
+<div class="container" >
+    <div class="row p-3" >
+        <div class="col-6" >
+            <h2 class="text-primary">Lista e studenteve</h2>
+        </div>
+        <div class="col-6 text-end" >
+            <a class="btn btn-success" asp-controller="Student" asp-action="Krijo" >Shto</a>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Emri</th>
+            <th>Mbiemri</th>
+            <th>Komuna</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (Student stud in Model)
+        {
+            <tr>
+                <td>@stud.Id</td>
+                    <td>@stud.Emri</td>
+                    <td>@stud.Mbiemri</td>
+                    <td>@stud.Komuna.Emri</td>
+            </tr>
+        }
+        
+        </tbody>
+
+       
+    </table>
+</div>

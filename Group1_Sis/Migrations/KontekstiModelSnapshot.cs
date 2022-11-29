@@ -21,6 +21,23 @@ namespace Group1Sis.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Group1_Sis.Models.Komuna", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Emri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Komuna");
+                });
+
             modelBuilder.Entity("Group1_Sis.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -33,13 +50,29 @@ namespace Group1Sis.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("KomunaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Mbiemri")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Studentet");
+                    b.HasIndex("KomunaId");
+
+                    b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("Group1_Sis.Models.Student", b =>
+                {
+                    b.HasOne("Group1_Sis.Models.Komuna", "Komuna")
+                        .WithMany()
+                        .HasForeignKey("KomunaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Komuna");
                 });
 #pragma warning restore 612, 618
         }
