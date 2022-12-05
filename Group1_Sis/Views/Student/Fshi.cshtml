@@ -1,0 +1,26 @@
+﻿@model Student
+<form method="post">
+    <div class="border p-3">
+        <div class="row pt-3">
+            <h6 class="text-primary">Fshi Studentin</h6>
+            <hr />
+        </div>
+        <input type="hidden" asp-for="Id" />
+        <div class="mb-2">
+            <label asp-for="Emri"></label>
+            <input asp-for="Emri" class="form-control" />
+        </div>
+        <div class="mb-2">
+            <label asp-for="Mbiemri"></label>
+            <input asp-for="Mbiemri" class="form-control" />
+        </div>
+        <div class="mb-2">
+            <label asp-for="KomunaId"></label>
+            <select asp-for="KomunaId" asp-items="ViewBag.Komunat" class="form-select">
+                <option selected="" value="0">--Selekto Komunat--</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-danger">Fshi</button>
+        <a asp-controller="Student" asp-action="Listo" class="btn btn-secondary">Kthehu</a>
+    </div>
+</form>
