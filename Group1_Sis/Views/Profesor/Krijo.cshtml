@@ -1,0 +1,36 @@
+﻿@model Profesor
+
+<form method="post">
+    <div class="border p-3">
+        <div class="row">
+            <h6 class="text-primary">Shto nje profesor</h6>
+       
+        </div>
+        <hr/>
+        <div class="mb-3">
+            <label asp-for="Emri"></label>
+            <input asp-for="Emri" class="form-control" />
+            <span asp-validation-for="Emri" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Mbiemri"></label>
+            <input asp-for="Mbiemri" class="form-control" />
+            <span asp-validation-for="Mbiemri" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="KomunaId"></label>
+            <select asp-for="KomunaId" asp-items="ViewBag.Kom" class="form-select">
+                <option selected="" disabled="" value="0">--Cakto Komunen--</option>
+            </select>
+            <span asp-validation-for="KomunaId" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-success">Shto</button>
+        <a class="btn btn-secondary" asp-controller="Profesor" asp-action="Listo">Kthehu</a>
+    </div>
+</form>
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+}
