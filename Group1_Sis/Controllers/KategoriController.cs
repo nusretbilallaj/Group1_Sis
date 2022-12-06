@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Group1_Sis.Controllers
 {
-    public class StudentController : Controller
+    public class KategoriController : Controller
     {
 
         private readonly Konteksti _konteksti;
@@ -26,38 +26,32 @@ namespace Group1_Sis.Controllers
 
             return lista;
         }
-        public StudentController(Konteksti kont)
+        public KategoriController(Konteksti kont)
         {
             _konteksti = kont;
-        } 
+        }
         public IActionResult Listo()
         {
-           List<Student> studentet= _konteksti.Studentet.Include(x=>x.Komuna).ToList();
+           List<Kategoria> kategorite= _konteksti.Kategorite.ToList();
            var komunat = _konteksti.Komunat.ToList();
 
-            return View(studentet);
+            return View(kategorite);
         }
         [HttpPost]
-        public IActionResult Krijo(Student student)
+        public IActionResult Krijo(Kategoria kat)
         {
             if (ModelState.IsValid)
             {
-                _konteksti.Studentet.Add(student);
+                _konteksti.Kategorite.Add(kat);
                 _konteksti.SaveChanges();
                 return RedirectToAction("Listo");
             }
-            ViewBag.Kom = MerriKomunat();
-            return View(student);
+            return View(kat);
         }
         public IActionResult Krijo()
         {
-            Student studi = new Student();
-
-          
-
-           ViewBag.Kom = MerriKomunat();
-
-            return View(studi);
+            Kategoria kat = new Kategoria();
+            return View(kat);
         }
 
         public IActionResult Fshi(int? id)
@@ -67,37 +61,33 @@ namespace Group1_Sis.Controllers
                 return NotFound();
             }
 
-            Student stud = _konteksti.Studentet.Find(id);
-            if (stud == null)
+            Kategoria kat = _konteksti.Kategorite.Find(id);
+            if (kat == null)
             {
                 return NotFound();
             }
-
-            ViewBag.Komunat = MerriKomunat();
-
-            return View(stud);
+            return View(kat);
         }
         [HttpPost]
-        public IActionResult Fshi(Student stu)
+        public IActionResult Fshi(Kategoria kat)
         {
   
-                _konteksti.Studentet.Remove(stu);
+                _konteksti.Kategorite.Remove(kat);
                 _konteksti.SaveChanges();
                 return RedirectToAction("Listo");
         }
 
 
         [HttpPost]
-        public IActionResult Ndrysho(Student stud)
+        public IActionResult Ndrysho(Kategoria kat)
         {
             if (ModelState.IsValid)
             {
-                _konteksti.Studentet.Update(stud);
+                _konteksti.Kategorite.Update(kat);
                 _konteksti.SaveChanges();
                 return RedirectToAction("Listo");
             }
-            ViewBag.Komunat = MerriKomunat();
-            return View(stud);
+            return View(kat);
         }
         public IActionResult Ndrysho(int? id)
         {
@@ -106,15 +96,12 @@ namespace Group1_Sis.Controllers
                 return NotFound();
             }
 
-            Student stud= _konteksti.Studentet.Find(id);
-            if (stud==null)
+            Kategoria kat= _konteksti.Kategorite.Find(id);
+            if (kat == null)
             {
                 return NotFound();
             }
-
-            ViewBag.Komunat = MerriKomunat();
-
-            return View(stud);
+            return View(kat);
         }
     }
 }
